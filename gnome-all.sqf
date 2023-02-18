@@ -16,7 +16,7 @@ gnome-desktop # Needs to be updated for newer gnome-control-center
 geocode-glib
 geoclue2
 libgweather4 # Updated to libgweather4 for gnome-settings-daemon.
-gnome-settings-daemon # Updated to 42.2, since 43.0 needs newer gcr-4 (slackware provides gcr-3). Update to 43.0 if -current updates.
+gnome-settings-daemon # Update to 43.0 and enabled building with gcr-3
 
 # Mutter compositor:
 zenity
