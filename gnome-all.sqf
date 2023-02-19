@@ -42,11 +42,14 @@ libwpe
 wpebackend-fdo
 bubblewrap
 webkit2gtk # Staying on this version, unless goa updates.
-rest
+libadwaita # Added for gnome-control-center, needs to come before new rest.
+gtksourceview5 # Needs to be here, new rest needs it.
+rest # Need a newer rest for gnome-maps, try using that. Deps on libadwaita now... Nope, leave at older version for now, too much breaks without it.
 gnome-online-accounts
 cups-pk-helper
-libadwaita # Added for gnome-control-center
 libnma-gtk4 # Need libnma's gtk4 library to build control-center.
+webp-pixbuf-loader # Added to support gnome-control-center's backgrounds loading
+xdg-desktop-portal-gnome # Added to support gnome-control center. E.g. switching light/dark mode.
 gnome-control-center # Updated to 43.4.1 Patched to allow building with older gnome-bluetooth
 
 # GNOME Shell and deps:
@@ -92,7 +95,7 @@ libcloudproviders # Added to please nautilus. Note: No maintainer for this on SB
 nautilus # Updated to 43.2, but requires libportal >= 0.5 (currently at 0.3, then libportal requires gi-docgen and deps)
 
 # gnome-shell extensions:
-gnome-menus
+# gnome-menus # No longer needed?
 gnome-shell-extensions # Upgraded to 43.1
 
 # gnome-browser-connector and deps:
@@ -143,7 +146,7 @@ simple-scan
 gnome-calendar # Upgraded to 42.2. Note: Newer 43.x versions need evolution-data-server >= 3.45.1
 
 # GNOME Calculator:
-gtksourceview5 # Using 5 now (was 4 before)
+#gtksourceview5 # Using 5 now (was 4 before)
 gnome-calculator # Upgraded to 43.0.1
 
 # gedit is an editor for GNOME:
@@ -173,16 +176,17 @@ file-roller
 # GNOME Maps:
 telepathy-glib
 folks
-geocode-glib2 # Added for newer gnome-maps version.
-libshumate # Added for newer gnome-maps version.
-rest # This is version 0.9.1, which gnome-maps needs. The older version is still in the queue, used by webkit2gtk, and gfbgraph.
-gnome-maps # Upgraded to 43.4 (needs new rest also)
+#geocode-glib2 # Added for newer gnome-maps version.
+#libshumate # Added for newer gnome-maps version.
+#rest # This is version 0.9.1, which gnome-maps needs. The older version is still in the queue, used by webkit2gtk, and gfbgraph.
+gnome-maps # Skip Upgrade to 43.4, due to rest conflicts.
 
 # GNOME Photos:
 # libsoup3 # Removed, since its in -current now.
 grilo
 gfbgraph
 libdazzle # gnome-photos still needs this
+geocode-glib2 # newer gnome-photos needs it.
 gnome-photos # Upgraded to 43.0
 
 # Seahorse GNOME Keyring manager:
