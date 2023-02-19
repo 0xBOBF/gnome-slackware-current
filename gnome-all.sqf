@@ -144,7 +144,7 @@ gnome-calendar # Upgraded to 42.2. Note: Newer 43.x versions need evolution-data
 
 # GNOME Calculator:
 gtksourceview5 # Using 5 now (was 4 before)
-gnome-calculator
+gnome-calculator # Upgraded to 43.0.1
 
 # gedit is an editor for GNOME:
 gtksourceview4 # Added here, since gedit needs it still
