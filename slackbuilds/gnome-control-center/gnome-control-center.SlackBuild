@@ -76,11 +76,6 @@ find -L . -prune -name 'subprojects/gvc/.gitlab-ci' \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
-# Patch gnome-control-center to use the old gnome-bluetooth version
-# in its bluetooth panel. Slackware is stuck with the old version 
-# of gnome-bluetooth, until upower is upgraded >= 0.99.14
-patch -Np1 -i $CWD/build_against_old_gnome-bluetooth.patch
-
 mkdir build
 cd build
   CFLAGS="$SLKCFLAGS" \
