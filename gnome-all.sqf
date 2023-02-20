@@ -9,14 +9,21 @@
 #
 # Good Luck! - Bob Funk
 
+# gi-docgen and deps:
+python-smartypants
+python3-typogrify
+python-toml
+gi-docgen
+
 # GNOME Settings Daemon and deps:
 libgusb
 colord
 gnome-desktop # Needs to be updated for newer gnome-control-center
-geocode-glib
+geocode-glib2 # Changed to geocode-glib2, which uses soup3 instead of soup2
 geoclue2
-libgweather4 # Updated to libgweather4 for gnome-settings-daemon.
-gnome-settings-daemon # Update to 43.0 and enabled building with gcr-3
+libgweather4 # Updated to libgweather4 for gnome-settings-daemon. Note: Ozan has soup2=true, which will build soup2 symbols linked to gnome-settings-daemon, and thus cause gnome-shell crash when it sees both soup2 and 2 symbols. Modify to only soup 3, and use the geocode-glib2 dep for soup3.
+gcr4 # Added for gnome-settings-daemon, deps on gi-docgen
+gnome-settings-daemon # Update to 43.0 
 
 # Mutter compositor:
 zenity
@@ -34,15 +41,15 @@ cheese # Upgraded to 43.0
 
 # GNOME Control Center and deps:
 colord-gtk # Needs to be updated to 0.3.0, ask the maintainer.
+gsound # Moved up, since its now a dep for gnome-bluetooth.
+libadwaita # Moved up, since its a dep for gnome-bluetooth
 gnome-bluetooth # Use older gtk3 version, and patch gnome-cc. unless upower ever moves above 0.99.13.
-gsound
 # libhandy # Removed, since its in -current now
 xdg-dbus-proxy
 libwpe
 wpebackend-fdo
 bubblewrap
 webkit2gtk # Staying on this version, unless goa updates.
-libadwaita # Added for gnome-control-center, needs to come before new rest.
 gtksourceview5 # Needs to be here, new rest needs it.
 rest # Need a newer rest for gnome-maps, try using that. Deps on libadwaita now... Nope, leave at older version for now, too much breaks without it.
 gnome-online-accounts
@@ -71,11 +78,6 @@ gdm # Updated to 43.0
 # GNOME Tweaks:
 gnome-tweaks # Updated to 42.beta
 
-# libportals new deps, if upgraded to 0.6:
-python-smartypants
-python3-typogrify
-python-toml
-gi-docgen
 # tracker:
 libportal # Upgraded to 0.6 for nautilus upgrade
 tracker
@@ -95,7 +97,7 @@ libcloudproviders # Added to please nautilus. Note: No maintainer for this on SB
 nautilus # Updated to 43.2, but requires libportal >= 0.5 (currently at 0.3, then libportal requires gi-docgen and deps)
 
 # gnome-shell extensions:
- gnome-menus # Still needed for extensions like arc menu and applications menu.
+gnome-menus # Still needed for extensions like arc menu and applications menu.
 gnome-shell-extensions # Upgraded to 43.1
 
 # gnome-browser-connector and deps:
@@ -129,7 +131,7 @@ gnome-system-monitor
 gnome-weather # Upgraded to 43.0
 
 # GNOME Clocks:
-libgweather # Added here for gnome-clocks, until the maintainer upgrades.
+#libgweather # removed. Only needed for older gnome-clocks. Newer will use libgweather4
 gnome-clocks
 
 # GNOME Disks:
@@ -143,6 +145,7 @@ simple-scan
 
 # GNOME Calendar:
 #libdazzle # Removed, since newer gnome-calendar versions do not use it.
+geocode-glib # Older calendar needs this older version. Lets hope it doesnt break gnome-shell...
 gnome-calendar # Upgraded to 42.2. Note: Newer 43.x versions need evolution-data-server >= 3.45.1
 
 # GNOME Calculator:
