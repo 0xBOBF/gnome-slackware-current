@@ -84,9 +84,6 @@ find -L . -prune -name 'subprojects/gvc/.gitlab-ci' \
   -o -perm 511 \) -exec chmod 755 {} \; -o \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
-# Patch to build against older gcr-3 version instead of gcr-4, 
-# since thats where slackware is at:
-patch -Np1 -i $CWD/build_against_gcr-3.patch
 
 mkdir build
 cd build
@@ -102,8 +99,7 @@ cd build
     --prefix=/usr \
     --sysconfdir=/etc \
     -Dstrip=true \
-    -Dsystemd=false \
-    -Dsoup2=true
+    -Dsystemd=false 
   "${NINJA:=ninja}"
   DESTDIR=$PKG $NINJA install
 cd ..
