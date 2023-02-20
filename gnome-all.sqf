@@ -95,7 +95,7 @@ libcloudproviders # Added to please nautilus. Note: No maintainer for this on SB
 nautilus # Updated to 43.2, but requires libportal >= 0.5 (currently at 0.3, then libportal requires gi-docgen and deps)
 
 # gnome-shell extensions:
-# gnome-menus # No longer needed?
+ gnome-menus # Still needed for extensions like arc menu and applications menu.
 gnome-shell-extensions # Upgraded to 43.1
 
 # gnome-browser-connector and deps:
