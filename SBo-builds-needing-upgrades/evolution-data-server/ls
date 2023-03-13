@@ -1,0 +1,14 @@
+diff -Naur evolution-data-server-3.46.4/CMakeLists.txt evolution-data-server-3.46.4-patched/CMakeLists.txt
+--- evolution-data-server-3.46.4/CMakeLists.txt	2023-02-10 07:08:50.000000000 +0000
++++ evolution-data-server-3.46.4-patched/CMakeLists.txt	2023-03-12 06:03:35.854027902 +0000
+@@ -102,8 +102,8 @@
+ set(gdk4_encoded_version GDK_VERSION_4_4)
+ 
+ # Keep these two definitions in agreement.
+-set(soup_minimum_version 3.1.1)
+-set(soup_encoded_version SOUP_VERSION_3_2)
++set(soup_minimum_version 3.0)	
++set(soup_encoded_version SOUP_VERSION_3_0)
+ 
+ # Warn about API usage that violates our minimum requirements.
+ add_definitions(-DGLIB_VERSION_MAX_ALLOWED=${glib_encoded_version})
