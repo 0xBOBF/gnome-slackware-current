@@ -1,0 +1,8 @@
+VTE provides a virtual terminal widget for GTK applications.
+
+This SlackBuild only packages the gtk4 version of the VTE widget, and
+can be installed alongside Slackware's gtk3 version of VTE. 
+
+Note that the version of this package is matched to the version of VTE
+that comes with Slackware.
+
