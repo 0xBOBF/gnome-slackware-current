@@ -5,6 +5,6 @@ DOWNLOAD="https://gitlab.gnome.org/GNOME/gnome-clocks/-/archive/43.0/gnome-clock
 MD5SUM="524c7ab0c968ab804fb7ece0e64299a9"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
-REQUIRES="gsound libgweather4 gnome-desktop geoclue2"
+REQUIRES="gsound libadwaita libgweather4 gnome-desktop geoclue2"
 MAINTAINER="Charadon"
 EMAIL="dev@iotib.net"

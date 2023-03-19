@@ -144,6 +144,7 @@ cd build
     -DENABLE_SMIME=ON \
     -DENABLE_IPV6=ON \
     -DBUILD_TESTING=OFF \
+    -DENABLE_OAUTH2_WEBKITGTK4=OFF \
     -DCMAKE_BUILD_TYPE=Release ..\
     -G Ninja
   "${NINJA:=ninja}"
