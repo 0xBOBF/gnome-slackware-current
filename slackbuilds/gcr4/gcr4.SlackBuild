@@ -31,6 +31,10 @@ BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
+# Default to disable building gcr4's gtk docs to
+# avoid dependency on gi-docgen:
+GTKDOC=${GTKDOC:-false}
+
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
     i?86) ARCH=i586 ;;
@@ -89,13 +93,11 @@ cd build
     --mandir=/usr/man \
     --prefix=/usr \
     --sysconfdir=/etc \
+    -Dgtk_doc=$GTKDOC \
     -Dstrip=true
   "${NINJA:=ninja}"
   DESTDIR=$PKG $NINJA install
 cd ..
-
-# Move the forbidden doc directory:
-mv $PKG/usr/share/doc $PKG/usr/doc
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp -a \

@@ -5,6 +5,6 @@ DOWNLOAD="https://download.gnome.org/sources/gnome-maps/43/gnome-maps-43.4.tar.x
 MD5SUM="99cfa55bf6a9edaa28de63562e6c06dc"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
-REQUIRES="folks libchamplain"
+REQUIRES="geoclue2 libadwaita libshumate rest"
 MAINTAINER="Bob Funk"
 EMAIL="bobfunk11@gmail.com"

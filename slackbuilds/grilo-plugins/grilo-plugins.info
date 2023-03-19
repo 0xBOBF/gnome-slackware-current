@@ -5,6 +5,6 @@ DOWNLOAD="https://download.gnome.org/core/43/43.4/sources/grilo-plugins-0.3.15.t
 MD5SUM="b2a12b3a244b4a8841dd56f1511586d3"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
-REQUIRES=""
+REQUIRES="lua53"
 MAINTAINER="Bob Funk"
 EMAIL="bobfunk11@gmail.com"

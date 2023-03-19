@@ -5,6 +5,6 @@ DOWNLOAD="https://download.gnome.org/sources/gnome-weather/43/gnome-weather-43.0
 MD5SUM="887033ffdcaac33870cc5ad0bfe96e96"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
-REQUIRES="geoclue2 libgweather4"
+REQUIRES="geoclue2 libadwaita libgweather4"
 MAINTAINER="Bob Funk"
 EMAIL="bobfunk11@gmail.com"

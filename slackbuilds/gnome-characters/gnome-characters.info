@@ -5,6 +5,6 @@ DOWNLOAD="https://download.gnome.org/core/43/43.4/sources/gnome-characters-43.1.
 MD5SUM="626b6607ed5a7d6d1177702721930647"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
-REQUIRES=""
+REQUIRES="libadwaita"
 MAINTAINER="Bob Funk"
 EMAIL="bobfunk11@gmail.com"

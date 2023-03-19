@@ -5,6 +5,6 @@ DOWNLOAD="https://download.gnome.org/core/43/43.4/sources/gnome-calendar-43.1.ta
 MD5SUM="dab452157219603197568d8983425d37"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
-REQUIRES="evolution-data-server libgweather4"
+REQUIRES="evolution-data-server geoclue2 libgweather4"
 MAINTAINER="Bob Funk"
 EMAIL="bobfunk11@gmail.com"

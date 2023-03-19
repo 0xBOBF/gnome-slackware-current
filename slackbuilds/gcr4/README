@@ -8,3 +8,7 @@ GCK is a library for accessing PKCS#11 modules like smart cards, in a
 Note: This is the gtk4 implementation of gcr, which is different than
 the gcr version that comes with Slackware.
 
+This build has the gtk documentation disabled to avoid depending on
+gi-docgen. You can set GTKDOC=true to build the gtk documentation and
+have the gi-docgen dependency installed.
+

@@ -88,13 +88,11 @@ cd build
     --mandir=/usr/man \
     --prefix=/usr \
     --sysconfdir=/etc \
+    -Dgtk_doc=false \
     -Dstrip=true
   "${NINJA:=ninja}"
   DESTDIR=$PKG $NINJA install
 cd ..
-
-# Fix the forbidden /usr/share/doc directory:
-mv $PKG/usr/share/doc $PKG/usr/doc
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp -a \
