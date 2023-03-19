@@ -104,16 +104,25 @@ gnome-backgrounds # Upgraded to 43.1
 gnome-tweaks # Updated to 42.beta
 
 # Yelp:
-lxml
-yelp-xsl
-yelp-tools
+   python3-webencodings
+  html5lib
+     python-toml
+     python2-setuptools-scm
+    functools-lru-cache
+   python2-soupsieve
+  python2-BeautifulSoup4
+   python3-soupsieve
+  BeautifulSoup4
+ lxml
+ yelp-xsl
+ yelp-tools
 yelp              # SBO version from willy needs "--with-webkit2gtk-4-0" removed from the build options.
 
 # Cheese is GNOME's webcam application:
 # NOTE: Build this before GNOME Control Center to build in webcam support to GNOME Control 
 #       Center, which is used in user profile pic settings
-  cogl
- clutter
+   cogl
+  clutter
  clutter-gtk
  clutter-gst
  gnome-video-effects # Added this package from core
@@ -150,8 +159,8 @@ gnome-calendar # Upgraded to 43.1. Note: Depends on newer evolution-data-server 
 gnome-calculator # Upgraded to 43.0.1
 
 # gedit is an editor for GNOME:
-gtksourceview4 # Added here, since gedit needs it still
-libpeas
+ gtksourceview4 # Added here, since gedit needs it still
+ libpeas
 gedit  # Note: gedit is not in gnome-core 43.x
 
 # Eye of Gnome image viewer:
@@ -164,7 +173,7 @@ evince # SBo version is 41.x. Builds okay but could be upgraded to 43.x
 gspell
 cmark
 libpst
-lua53
+ lua53
 highlight
 ytnef
 libchamplain
@@ -180,6 +189,7 @@ gnome-maps # Upgraded to 43.4
 # GNOME Photos:
 #grilo
 #gfbgraph # Dropped. No longer needed by gnome-photos , it seems.
+libdazzle
 gnome-photos # Upgraded to 44.0, which had the fix for not finding newer versions of babl in the meson build.
 
 # Seahorse GNOME Keyring manager:
@@ -188,7 +198,7 @@ seahorse # Not in gnome-core
 # GNOME Screenshot:
 gnome-screenshot # Not in gnome-core
 
-# Zenity:
+# Zenity: Not part of gnome-core
 zenity
 
 # Some games for GNOME: Not in gnome-core
