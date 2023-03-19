@@ -30,11 +30,12 @@ BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
-# Options to disable by default:
-FLATPAK=${FLATPAK:-false}
+# Set some default build options:
+FLATPAK=${FLATPAK:-true}
 FWUPD=${FWUPD:-false}
 MALCONTENT=${MALCONTENT:-false}
 PACKAGEKIT=${PACKAGEKIT:-false}
+SOUP2=${SOUP2:-true}
 SYSPROF=${SYSPROF:-disabled}
 TESTS=${TESTS:-false}
 
@@ -100,6 +101,7 @@ cd build
     -Dfwupd=$FWUPD \
     -Dmalcontent=$MALCONTENT \
     -Dpackagekit=$PACKAGEKIT \
+    -Dsoup2=$SOUP2 \
     -Dsysprof=$SYSPROF \
     -Dtests=$TESTS \
     -Dstrip=true

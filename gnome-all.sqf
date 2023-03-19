@@ -318,13 +318,12 @@ gnome-boxes # 43.2
 #  libsmbios
 #  gcab
 # fwupd
-#flatpak and friends: Not adding flatpak, due to ostree and flatpak building against libsoup2 and gnome-software being on soup3.
-#                     This will crash gnome-software. Must wait till ostree and flatpak port to soup3
-#  xdg-desktop-portal-gtk
-#  appstream-glib
-#  ostree
-# flatpak
-gnome-software
+#flatpak and friends: Note: Builds against libsoup2, so gnome-software must also use soup2
+  xdg-desktop-portal-gtk
+  appstream-glib
+  ostree
+ flatpak
+gnome-software # set to use soup2
 
 # GNOME Builder: # Skipping the rest of this for now
 #sysprof
