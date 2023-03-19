@@ -261,11 +261,11 @@ gnome-tour
 gnome-user-share
 
 # Rygel and deps:
-gssdp # On SBo
-gupnp # On SBo
-gupnp-av # Added a build
-gupnp-dlna # Added a build
-gst-editing-services # On SBo
+  gssdp # On SBo
+ gupnp # On SBo
+ gupnp-av # Added a build
+ gupnp-dlna # Added a build
+ gst-editing-services # On SBo
 rygel
 
 # Totem, aka GNOME Videos:
@@ -294,21 +294,26 @@ gnome-boxes # 43.2
 # GNOME Software: ##### NOTE: SOMETHING IN THE FOLLOWING LIST BUILDS AGAINST LIBSOUP2
 #                             GNOME-SOFTWARE WILL CRASH UNTIL THIS IS RESOLVED TO USE
 #                             SOUP3 ONLY
-AppStream
-PackageKit # Added myself. Could also disable in gnome-software meson options
-#fwupd and friends:
-libjcat
-protobuf3
-protobuf
-libsmbios
-gcab
-libxmlb
-fwupd
-#flatpak and friends:
-xdg-desktop-portal-gtk
-appstream-glib
-ostree
-flatpak
+  libxmlb
+ AppStream
+#PackageKit # Added myself. Testing with disabled
+#malcontent # Not present. Testing with disabled
+#fwupd and friends: Not building fwupd, due to gcab issues causing FTB of fwupd on -current. Wait till maintainer fixes fwupd.
+#  libjcat
+#  python-smartypants
+#  python3-typogrify
+#  python-toml
+#  protobuf3
+#  protobuf-c
+#  libsmbios
+#  gcab
+# fwupd
+#flatpak and friends: Not adding flatpak, due to ostree and flatpak building against libsoup2 and gnome-software being on soup3.
+#                     This will crash gnome-software. Must wait till ostree and flatpak port to soup3
+#  xdg-desktop-portal-gtk
+#  appstream-glib
+#  ostree
+# flatpak
 gnome-software
 
 # GNOME Builder: # Skipping the rest of this for now

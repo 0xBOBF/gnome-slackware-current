@@ -30,6 +30,14 @@ BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
+# Options to disable by default:
+FLATPAK=${FLATPAK:-false}
+FWUPD=${FWUPD:-false}
+MALCONTENT=${MALCONTENT:-false}
+PACKAGEKIT=${PACKAGEKIT:-false}
+SYSPROF=${SYSPROF:-disabled}
+TESTS=${TESTS:-false}
+
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
     i?86) ARCH=i586 ;;
@@ -88,7 +96,12 @@ cd build
     --mandir=/usr/man \
     --prefix=/usr \
     --sysconfdir=/etc \
-    -Dmalcontent=false \
+    -Dflatpak=$FLATPAK \
+    -Dfwupd=$FWUPD \
+    -Dmalcontent=$MALCONTENT \
+    -Dpackagekit=$PACKAGEKIT \
+    -Dsysprof=$SYSPROF \
+    -Dtests=$TESTS \
     -Dstrip=true
   "${NINJA:=ninja}"
   DESTDIR=$PKG $NINJA install
