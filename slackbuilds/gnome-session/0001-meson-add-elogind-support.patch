@@ -1,7 +1,7 @@
-From ab8893f12c925050aceea4e31dd84aef674c6e9f Mon Sep 17 00:00:00 2001
+From 1183d630e7cfc1ba075abd1e6f8673fd167a9b70 Mon Sep 17 00:00:00 2001
 From: Dudemanguy <random342@airmail.cc>
 Date: Wed, 7 Oct 2020 10:08:33 -0500
-Subject: [PATCH 1/1] meson: add elogind support
+Subject: [PATCH] meson: add elogind support
 
 systemd session management (AKA logind) works with elogind. Just add an
 option to enable elogind and modify the defines a little bit to get it
@@ -32,7 +32,7 @@ index f6d264f8..ad04e6bc 100644
    unit_conf.set('libexecdir', session_libexecdir)
  
 diff --git a/gnome-session/gsm-autostart-app.c b/gnome-session/gsm-autostart-app.c
-index 8204d4f1..244a325f 100644
+index 306196c7..dee7d89b 100644
 --- a/gnome-session/gsm-autostart-app.c
 +++ b/gnome-session/gsm-autostart-app.c
 @@ -31,7 +31,7 @@
@@ -45,7 +45,7 @@ index 8204d4f1..244a325f 100644
  #include <systemd/sd-journal.h>
  #endif
 diff --git a/gnome-session/gsm-manager.c b/gnome-session/gsm-manager.c
-index 1b88b266..8dfd23fe 100644
+index 05e0d8d5..b5140656 100644
 --- a/gnome-session/gsm-manager.c
 +++ b/gnome-session/gsm-manager.c
 @@ -974,7 +974,7 @@ _client_stop (const char *id,
@@ -80,7 +80,7 @@ index cf30a4bd..d25ca83c 100644
  #include <errno.h>
  #include <string.h>
 diff --git a/gnome-session/gsm-util.c b/gnome-session/gsm-util.c
-index f1e6489d..607395c8 100644
+index f2752573..30d29a97 100644
 --- a/gnome-session/gsm-util.c
 +++ b/gnome-session/gsm-util.c
 @@ -626,7 +626,7 @@ gsm_util_export_activation_environment (GError     **error)
@@ -115,19 +115,19 @@ index bc26a21e..97289c02 100644
  gboolean    gsm_util_start_systemd_unit             (const char  *unit,
                                                       const char  *mode,
 diff --git a/gnome-session/main.c b/gnome-session/main.c
-index a460a849..65bc9721 100644
+index 3ae85225..08b668c4 100644
 --- a/gnome-session/main.c
 +++ b/gnome-session/main.c
-@@ -541,7 +541,7 @@ main (int argc, char **argv)
+@@ -545,7 +545,7 @@ main (int argc, char **argv)
  
          session_name = opt_session_name;
  
 -#ifdef HAVE_SYSTEMD
 +#if defined(HAVE_SYSTEMD) || defined(HAVE_ELOGIND)
          gsm_util_export_user_environment (&error);
-         if (error && !g_getenv ("RUNNING_UNDER_GDM")) {
+         if (error && !g_getenv ("RUNNING_UNDER_GDM"))
                  g_warning ("Failed to upload environment to systemd: %s", error->message);
-@@ -624,7 +624,7 @@ main (int argc, char **argv)
+@@ -626,7 +626,7 @@ main (int argc, char **argv)
  
          gsm_main ();
  
@@ -137,7 +137,7 @@ index a460a849..65bc9721 100644
  #endif
  
 diff --git a/meson.build b/meson.build
-index f56aa316..b29860b1 100644
+index 5121dc69..425719c5 100644
 --- a/meson.build
 +++ b/meson.build
 @@ -119,7 +119,8 @@ enable_systemd_session = get_option('systemd_session') != 'disable'
@@ -150,7 +150,7 @@ index f56aa316..b29860b1 100644
    session_bin_deps += dependency('gio-unix-2.0', version: glib_req_version)
  
    # Check for systemd
-@@ -161,14 +162,24 @@ if enable_systemd or enable_consolekit
+@@ -164,14 +165,24 @@ if enable_systemd or enable_consolekit
        session_tracking = 'ConsoleKit'
      endif
    endif
@@ -177,17 +177,15 @@ index f56aa316..b29860b1 100644
  
  configure_file(
 diff --git a/meson_options.txt b/meson_options.txt
-index 4c05dc6e..4a27c7fd 100644
+index d3bd3838..682f0980 100644
 --- a/meson_options.txt
 +++ b/meson_options.txt
-@@ -3,6 +3,7 @@ option('session_selector', type: 'boolean', value: false, description: 'enable b
+@@ -1,4 +1,5 @@
+ option('deprecation_flags', type: 'boolean', value: false, description: 'use *_DISABLE_DEPRECATED flags')
++option('elogind', type: 'boolean', value: false, description: 'Use elogind')
+ option('session_selector', type: 'boolean', value: false, description: 'enable building a custom session selector dialog')
  option('systemd', type: 'boolean', value: true, description: 'Use systemd')
  option('systemd_session', type: 'combo', choices: ['disable', 'enable', 'default'], value: 'default', description: 'Whether to include systemd session support and use it by default')
- option('systemd_journal', type: 'boolean', value:'true', description: 'Send log to systemd-journal')
-+option('elogind', type: 'boolean', value: false, description: 'Use elogind')
- option('consolekit', type: 'boolean', value: false, description: 'Use consolekit')
- option('docbook', type: 'boolean', value: true, description: 'build documentation')
- option('man', type: 'boolean', value: true, description: 'build documentation (requires xmlto)')
 -- 
-2.34.1
+2.40.1
 
