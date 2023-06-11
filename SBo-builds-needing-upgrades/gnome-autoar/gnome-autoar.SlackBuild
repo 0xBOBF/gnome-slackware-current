@@ -1,8 +1,8 @@
 #!/bin/bash
 
-# Slackware build script for gnome-web
+# Slackware build script for gnome-autoar
 
-# Copyright 2022 Charadon US
+# Copyright 2022 Ozan Türkyılmaz
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -24,23 +24,49 @@
 
 cd $(dirname $0) ; CWD=$(pwd)
 
-PRGNAM=epiphany
-VERSION=${VERSION:-44.3}
-BUILD=${BUILD:-1}
+PRGNAM=gnome-autoar
+VERSION=${VERSION:-0.4.4}
+BUILD=${BUILD:-3}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
-if [ -z "$ARCH" ]; then
-case "$( uname -m )" in
-    i?86) ARCH=i586 ;;
-    arm*) ARCH=arm ;;
-    *) ARCH=$( uname -m ) ;;
-esac
+INTROSPECTION=${INTROSPECTION:-yes}
+GTKDOC=${GTKDOC:-no}
+TESTS=${TESTS:-no}
+VAPI=${VAPI:-yes}
+
+if [ "$INTROSPECTION" = "yes" ]; then
+  INTROSPECTIONP="enabled"
+else
+ INTROSPECTIONP="disabled"
 fi
 
-# If the variable PRINT_PACKAGE_NAME is set, then this script will report what
-# the name of the created package would be, and then exit. This information
-# could be useful to other scripts.
+if [ "$GTKDOC" = "yes" ]; then
+  GTKDOCP="true"
+else
+  GTKDOCP="false"
+fi
+
+if [ "$TESTS" = "yes" ]; then
+  TESTSP="true"
+else
+  TESTSP="false"
+fi
+
+if [ "$VAPI" = "yes" ]; then
+  VAPIP="true"
+else
+  VAPIP="false"
+fi
+
+if [ -z "$ARCH" ]; then
+  case "$( uname -m )" in
+    i?86) ARCH=i586 ;;
+    arm*) ARCH=arm ;;
+       *) ARCH=$( uname -m ) ;;
+  esac
+fi
+
 if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
   echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
   exit 0
@@ -72,6 +98,11 @@ cd $TMP
 rm -rf $PRGNAM-$VERSION
 tar xvf $CWD/$PRGNAM-$VERSION.tar.xz
 cd $PRGNAM-$VERSION
+
+# This symlink points at /tmp and needs removing or the find line will go
+# outside of the build tree
+rm -vf tests/files/extract/test-symlink-parent/reference/arextract
+
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
@@ -81,25 +112,39 @@ find -L . \
 
 mkdir build
 cd build
-  CFLAGS="$SLKCFLAGS"   CXXFLAGS="$SLKCFLAGS"   meson ..     --buildtype=release     --infodir=/usr/info     --libdir=/usr/lib${LIBDIRSUFFIX}     --localstatedir=/var     --mandir=/usr/man     --prefix=/usr     --sysconfdir=/etc     -Dstrip=true
+  CFLAGS="$SLKCFLAGS" \
+  CXXFLAGS="$SLKCFLAGS" \
+  meson .. \
+    --buildtype=release \
+    --infodir=/usr/info \
+    --libdir=/usr/lib${LIBDIRSUFFIX} \
+    --localstatedir=/var \
+    --mandir=/usr/man \
+    --prefix=/usr \
+    --sysconfdir=/etc \
+    -Dstrip=true \
+    -Dgtk=true \
+    -Dintrospection="$INTROSPECTIONP" \
+    -Dvapi="$VAPIP" \
+    -Dtests="$TESTSP" \
+    -Dgtk_doc="$GTKDOCP"
   "${NINJA:=ninja}"
   DESTDIR=$PKG $NINJA install
 cd ..
 
+rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la
+
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
 
-find $PKG/usr/man -type f -exec gzip -9 {} \;
-for i in $( find $PKG/usr/man -type l ) ; do ln -s $( readlink $i ).gz $i.gz ; rm $i ; done
-
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-cp -a COPYING $PKG/usr/doc/$PRGNAM-$VERSION
-cp -a NEWS $PKG/usr/doc/$PRGNAM-$VERSION
+cp -a \
+  COPYING NEWS README.md \
+  $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc
-cat $CWD/doinst.sh > $PKG/install/doinst.sh
 
 cd $PKG
 /sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

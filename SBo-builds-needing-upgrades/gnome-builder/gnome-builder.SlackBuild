@@ -1,8 +1,8 @@
 #!/bin/bash
 
-# Slackware build script for gnome-web
+# Slackware build script for gnome-builder
 
-# Copyright 2022 Charadon US
+# Copyright 2023 Charadon US
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -24,8 +24,8 @@
 
 cd $(dirname $0) ; CWD=$(pwd)
 
-PRGNAM=epiphany
-VERSION=${VERSION:-44.3}
+PRGNAM=gnome-builder
+VERSION=${VERSION:-44.2}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -81,20 +81,31 @@ find -L . \
 
 mkdir build
 cd build
-  CFLAGS="$SLKCFLAGS"   CXXFLAGS="$SLKCFLAGS"   meson ..     --buildtype=release     --infodir=/usr/info     --libdir=/usr/lib${LIBDIRSUFFIX}     --localstatedir=/var     --mandir=/usr/man     --prefix=/usr     --sysconfdir=/etc     -Dstrip=true
+  CFLAGS="$SLKCFLAGS" \
+  CXXFLAGS="$SLKCFLAGS" \
+  meson .. \
+  --buildtype=release \
+  --infodir=/usr/info \
+  --libdir=/usr/lib${LIBDIRSUFFIX} \
+  --localstatedir=/var \
+  --mandir=/usr/man \
+  --prefix=/usr \
+  --sysconfdir=/etc \
+  -Dstrip=true 
   "${NINJA:=ninja}"
   DESTDIR=$PKG $NINJA install
 cd ..
 
+rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la
+
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
 
-find $PKG/usr/man -type f -exec gzip -9 {} \;
-for i in $( find $PKG/usr/man -type l ) ; do ln -s $( readlink $i ).gz $i.gz ; rm $i ; done
-
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-cp -a COPYING $PKG/usr/doc/$PRGNAM-$VERSION
-cp -a NEWS $PKG/usr/doc/$PRGNAM-$VERSION
+cp -a COPYING AUTHORS NEWS $PKG/usr/doc/$PRGNAM-$VERSION
+mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION/html
+#mv $PKG/usr/share/doc/* $PKG/usr/doc/$PRGNAM-$VERSION/html
+rm -rf $PKG/usr/share/doc
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install
