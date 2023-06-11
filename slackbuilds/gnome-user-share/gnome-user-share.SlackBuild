@@ -89,12 +89,11 @@ cd build
     --prefix=/usr \
     --sysconfdir=/etc \
     -Dsystemduserunitdir=no \
+    -Dmodules_path=/usr/lib${LIBDIRSUFFIX}/httpd/modules \
     -Dstrip=true
   "${NINJA:=ninja}"
   DESTDIR=$PKG $NINJA install
 cd ..
-
-#rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
