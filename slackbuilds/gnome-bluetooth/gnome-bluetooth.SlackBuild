@@ -76,18 +76,6 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
-# Conditionally apply UPower patch. 
-# If UPower >= 0.99.14, we can do a regular build.
-# If not, remove battery reporting for bluetooth devices to remove
-# dependency on newer UPower versions.
-up_version="$(pkg-config --modversion upower-glib)"
-if [ "$(echo $up_version | cut -d. -f1)" = "0" ]; then
-  if [ "$(echo $up_version | cut -d. -f3)" -lt "14" ]; then
-    echo "UPower 0.99.13 or less detected. Removing bluetooth power reporting."
-    patch -Np1 -i $CWD/remove_bluetooth_power_reporting.patch
-  fi
-fi
-
 mkdir build
 cd build
   CFLAGS="$SLKCFLAGS" \
