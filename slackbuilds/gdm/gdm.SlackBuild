@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=gdm
-VERSION=${VERSION:-43.0}
+VERSION=${VERSION:-44.1}
 BUILD=${BUILD:-3}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -78,7 +78,7 @@ find -L . \
 
 # A couple patches taken from Artix Linux:
 patch -Np1 -i $CWD/0001-Xsession-Don-t-start-ssh-agent-by-default.patch
-patch -Np1 -i $CWD/0002-meson-allow-building-with-elogind.patch
+patch -Np1 -i $CWD/9257ef1f6e106bdedc40e34588b31bec39d6b5b1.patch
 patch -Np1 -i $CWD/0003-add-wayland-session-script.patch
 patch -Np1 -i $CWD/0004-fix-Xsession-language-in-gnome.patch
 
