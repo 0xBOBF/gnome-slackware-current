@@ -26,7 +26,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=vte-gtk4
 PRGNAM2=vte
-VERSION=${VERSION:-0.70.3}
+VERSION=${VERSION:-0.72.1}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
