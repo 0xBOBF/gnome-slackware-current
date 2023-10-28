@@ -1,7 +1,7 @@
 PRGNAM="gnome-tour"
 VERSION="44.0"
 HOMEPAGE="https://gitlab.gnome.org/GNOME/gnome-tour"
-DOWNLOAD="https://download.gnome.org/core/44/44.2/sources/gnome-tour-44.0.tar.xz"
+DOWNLOAD="https://download.gnome.org/core/44/44.0/sources/gnome-tour-44.0.tar.xz"
 MD5SUM="a8052f28d36ef5f29b53517d75b10526"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""

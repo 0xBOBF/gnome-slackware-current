@@ -22,6 +22,8 @@ gnome-settings-daemon
 # GNOME Control Center and deps:
 colord-gtk
 gsound
+libxmlb
+AppStream
 libadwaita # Needs to be upgraded to 1.3.X
 gnome-bluetooth
 xdg-dbus-proxy
@@ -34,7 +36,8 @@ svt-av1
 dav1d
 aom
 libavif
-webkit2gtk6.0 # Needs to be added to SBo
+unifdef
+webkit2gtk6.0 # Needs to be added to SBo, >= 2.41.1 to build epiphany later in queue
 webkit2gtk4.1 # Need older gtk3 version for some apps
 gtksourceview5
 rest # Needs newer version of rest for g-o-a
@@ -49,9 +52,11 @@ gnome-control-center
 
 # GNOME Shell and deps:
 xvfb-run
+python3-attrs
+libei
 mutter
 evolution-data-server
-gnome-autoar
+gnome-autoar # needs an upgrade to 0.4.4 (sbo at 0.4.3)
 gnome-shell
 
 # GNOME Session Manager:
@@ -96,7 +101,20 @@ python-toml
 python2-setuptools-scm
 functools-lru-cache
 python2-soupsieve
-python2-BeautifulSoup4
+python2-BeautifulSoup
+python3-flit_core
+python3-installer
+python3-wheel
+python3-zipp
+python-importlib_metadata
+python3-pyproject-hooks
+python3-build
+python3-calver
+python3-trove-classifiers
+python3-pluggy
+python3-pathspec
+python3-editables
+python3-hatchling
 python3-soupsieve
 BeautifulSoup4
 lxml
@@ -105,12 +123,15 @@ yelp-tools
 yelp # SBO version from willy needs "--with-webkit2gtk-4-0" removed from the build options.
 
 # Cheese is GNOME's webcam application:
-cogl
-clutter
-clutter-gtk
-clutter-gst
-gnome-video-effects
-cheese
+#cogl
+#clutter
+#clutter-gtk
+#clutter-gst
+#gnome-video-effects
+#cheese
+
+# eog has been replaced by loupe for gnome 45 releases:
+loupe
 
 # GNOME Terminal Emulator:
 gnome-terminal
@@ -139,46 +160,57 @@ gnome-calendar # Depends on newer evolution-data-server on SBo.
 # GNOME Calculator:
 gnome-calculator
 
+# Note: gedit is no longer in gnome-core, replaced by gnome-text-editor
 # gedit is an editor for GNOME:
-gtksourceview4 # Added here, since gedit needs it still
-libpeas
-gedit  # Note: gedit is not in gnome-core 43.x
+#gtksourceview4 # Added here, since gedit needs it still
+#libpeas
+#gedit
 
 # Eye of Gnome image viewer:
-eog # Needs upgrade on SBo 
+#eog # Needs upgrade on SBo 
 
 # Evince document viewer:
 evince # Needs upgrade on SBo
 
 # Evolution email/calendar/organizer client:
-gspell
-cmark
-libpst
-lua53
-highlight
-ytnef
-libchamplain
-evolution # NOTE: Evolution is not in gnome-core
+#gspell
+#cmark
+#libpst
+#lua53
+#highlight
+#ytnef
+#libchamplain
+#evolution # NOTE: Evolution is not in gnome-core
 
 # File-Roller archive manager:
 file-roller
+
+# Sysprof:
+libdex # Needs upgrade to 0.4.0 on  SBo
+libpanel # Not on SBo yet.
+sysprof # Upgraded from SBo version.
 
 # GNOME Maps:
 libshumate
 gnome-maps
 
+# Note: gnome-photos is replaced by loupe in gnome 45
 # GNOME Photos:
-libdazzle
-gnome-photos
+#libdazzle
+#gnome-photos
 
 # Seahorse GNOME Keyring manager:
-seahorse # Not in gnome-core
+#seahorse # Not in gnome-core
 
 # GNOME Screenshot:
-gnome-screenshot # Not in gnome-core
+#gnome-screenshot # Not in gnome-core, built into gnome-shell >= 42.0
+
+# GNOME Snapshot is the new cheese:
+gnome-snapshot
+
 
 # Zenity: Not part of gnome-core
-zenity
+#zenity
 
 # GNOME Calls and Deps: Adding from gnome-core
 callaudiod
@@ -187,6 +219,7 @@ telepathy-glib
 folks
 gom
 sofia-sip
+libpeas
 calls
 
 # Cantarell Font
@@ -231,6 +264,7 @@ gnome-remote-desktop
 gnome-text-editor
 
 # GNOME Tour:
+# Have to use 44.0 version, since 45.0 version requires pango >= 1.51 (Slackware on 1.50.14)
 gnome-tour
 
 # GNOME User Share:
@@ -253,13 +287,13 @@ totem
 orca
 
 # Sushi
+gtksourceview4
 sushi
 
 # Epiphany:
-epiphany
+epiphany # Version 45.0 needs webkit2gtk6.0 to be >= 2.41.1, fallback to 44.7 to use 2.40.5
 
 # GNOME Boxes:
-libosinfo # Needs to be upgraded to 1.10.0 on SBo for gnome-boxes.
 yajl
 libvirt
 libvirt-glib
@@ -294,7 +328,6 @@ gnome-boxes
 #gnome-software # set to use soup2
 
 # GNOME Builder: # Skipping the rest of this for now
-#sysprof
 #sphinx_rtd_theme
 #sphinxcontrib-serializinghtml
 #sphinxcontrib-qthelp

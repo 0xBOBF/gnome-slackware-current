@@ -1,7 +1,7 @@
 PRGNAM="gnome-online-accounts"
 VERSION="3.48.0"
 HOMEPAGE="https://wiki.gnome.org/Projects/GnomeOnlineAccounts"
-DOWNLOAD="https://download.gnome.org/core/44/44.2/sources/gnome-online-accounts-3.48.0.tar.xz"
+DOWNLOAD="https://download.gnome.org/core/45/45.0/sources/gnome-online-accounts-3.48.0.tar.xz"
 MD5SUM="9406339e88caf9ecd11191f96b6cc10e"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""

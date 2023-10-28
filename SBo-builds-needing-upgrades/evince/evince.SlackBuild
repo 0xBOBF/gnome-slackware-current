@@ -31,7 +31,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=evince
-VERSION=${VERSION:-44.1}
+VERSION=${VERSION:-45.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -67,7 +67,15 @@ else
   LIBDIRSUFFIX=""
 fi
 
-set -e
+# Detect nautilus is installed and enable building the plugin:
+if ( pkg-config --exists libnautilus-extension-4 ); then
+  NAUTILUS_PLUGIN=true
+  echo "nautilus found, enabling plugin."
+else
+  NAUTILUS_PLUGIN=false
+fi
+
+#set -e
 
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
@@ -78,6 +86,8 @@ cd $PRGNAM-$VERSION
 chown -R root:root .
 find -L .  -perm /111 -a \! -perm 755 -a -exec chmod 755 {} \+ -o \
         \! -perm /111 -a \! -perm 644 -a -exec chmod 644 {} \+
+# Moving set -e here since the build pukes over the above find
+set -e
 
 mkdir build
 cd build
