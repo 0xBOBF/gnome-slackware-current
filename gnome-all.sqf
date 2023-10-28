@@ -206,7 +206,7 @@ gnome-maps
 #gnome-screenshot # Not in gnome-core, built into gnome-shell >= 42.0
 
 # GNOME Snapshot is the new cheese:
-gnome-snapshot
+snapshot
 
 
 # Zenity: Not part of gnome-core
