@@ -101,11 +101,11 @@ python-toml
 python2-setuptools-scm
 functools-lru-cache
 python2-soupsieve
-python2-BeautifulSoup
+python2-BeautifulSoup4
 python3-flit_core
 python3-installer
 python3-wheel
-python3-zipp
+python-zipp
 python-importlib_metadata
 python3-pyproject-hooks
 python3-build
