@@ -1,0 +1,11 @@
+PRGNAM="libportal"
+VERSION="0.7.1"
+HOMEPAGE="https://github.com/flatpak/libportal"
+DOWNLOAD="https://github.com/flatpak/libportal/releases/download/0.7.1/libportal-0.7.1.tar.xz"
+MD5SUM="f94be41e8495ae7d6aaed046481daa61"
+DOWNLOAD_x86_64=""
+MD5SUM_x86_64=""
+REQUIRES=""
+MAINTAINER="Matteo Bernardini"
+EMAIL="ponce@slackbuilds.org"
+
