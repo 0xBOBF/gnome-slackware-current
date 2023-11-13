@@ -86,6 +86,10 @@ find . \
   \( -perm 666 -o -perm 664 -o -perm 600 -o -perm 444 -o -perm 440 -o -perm 400 \) \
   -exec chmod 644 {} \+
 
+# Patch meson.build to prevent ftb when bubblewrap is not installed:
+patch -Np1 -i "$CWD/fix_build_without_bwrap_installed.patch"
+
+
 # Note: sandboxed-image-validation=false disables the bwrap dependency.
 mkdir build
 cd build

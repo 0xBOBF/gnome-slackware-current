@@ -1,0 +1,20 @@
+diff -Naur xdg-desktop-portal-1.18.1/src/meson.build xdg-desktop-portal-1.18.1-patched/src/meson.build
+--- xdg-desktop-portal-1.18.1/src/meson.build	2023-10-26 15:23:39.000000000 +0000
++++ xdg-desktop-portal-1.18.1-patched/src/meson.build	2023-11-10 02:00:53.070210127 +0000
+@@ -156,7 +156,6 @@
+ helper_def = ''
+ if bwrap.found()
+   helper_def = '-DHELPER="@0@"'.format(bwrap.full_path())
+-endif
+ 
+ executable(
+   'xdg-desktop-portal-validate-icon',
+@@ -169,7 +168,7 @@
+   install: true,
+   install_dir: libexecdir,
+ )
+-
++endif
+ configure_file(
+   input: 'xdg-desktop-portal-rewrite-launchers.service.in',
+   output: '@BASENAME@',
