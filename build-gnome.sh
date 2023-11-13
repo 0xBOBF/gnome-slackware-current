@@ -6,6 +6,7 @@
 ################ Setup Section ################
 BASEDIR="$(pwd)"
 SBO_BASE_URL="https://slackbuilds.org/slackbuilds/15.0"
+ARCH="$(uname -m)"
 
 # This script will automate the building of the following queuefile:
 QUEUEFILE="$BASEDIR/gnome-all.sqf"
@@ -38,7 +39,7 @@ fi
 
 # Get a new SLACKBUILDS.TXT if its older than 7 days:
 if [ "$(( ($(date +%s) - $(stat -c %Y "$SBO_TXT"))/(60*60*24) ))" -ge "7" ]; then
-  ( cd "${REPO[0]}" || exit 1 ; wget "$SBO_BASE_URL/SLACKBUILDS.TXT" || exit 1 )
+  ( cd "${REPO[0]}" || exit 1 ; rm "$SBO_TXT" && wget "$SBO_BASE_URL/SLACKBUILDS.TXT" || exit 1 )
 fi
 
 # Setup any required users and groups:
@@ -75,16 +76,26 @@ handle_build () {
     echo "[${p}/${QUEUEFILE_LENGTH}] Building $pkg from '$PKG_SOURCE_DIR'"
     SOURCE_LIST=()
     MD5SUM_LIST=()
-    for SOURCE_FILE in ${DOWNLOAD}; do
-      SOURCE_LIST+=( "$SOURCE_FILE" )
-    done
-    for MD5 in ${MD5SUM}; do
-      MD5SUM_LIST+=( "$MD5" )
-    done
+    if [ "$ARCH" = "x86_64" -o "$ARCH" = "aarch64" ] && [ -n "$DOWNLOAD_x86_64" ]; then
+      for SOURCE_FILE in ${DOWNLOAD_x86_64}; do
+        SOURCE_LIST+=( "$SOURCE_FILE" )
+      done
+      for MD5 in ${MD5SUM_x86_64}; do
+        MD5SUM_LIST+=( "$MD5" )
+      done
+    else
+      for SOURCE_FILE in ${DOWNLOAD}; do
+        SOURCE_LIST+=( "$SOURCE_FILE" )
+      done
+      for MD5 in ${MD5SUM}; do
+        MD5SUM_LIST+=( "$MD5" )
+      done
+    fi
+
     for i in "${!SOURCE_LIST[@]}"; do
       SOURCE="$(basename "${SOURCE_LIST[$i]}")"
       if [ ! -e "$SOURCE" ]; then
-        wget --quiet "${SOURCE_LIST[$i]}"
+        wget "${SOURCE_LIST[$i]}"
       fi
       echo "${MD5SUM_LIST[$i]} $SOURCE"
       if ! ( echo "${MD5SUM_LIST[$i]} $SOURCE" | md5sum --status -c - ); then
@@ -92,12 +103,15 @@ handle_build () {
         return 1
       fi
     done
+
     if ! ( sh "${pkg}".SlackBuild ); then
       return 1
     fi
+
     if ! ( installpkg /tmp/"${pkg}"-*.t?z ); then
       return 1
     fi
+
   fi
   return 0
 }
