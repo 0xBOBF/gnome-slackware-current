@@ -30,6 +30,14 @@ xdg-dbus-proxy
 libwpe
 wpebackend-fdo
 bubblewrap
+#webkit2gtk6.0-2.42.1 deps on JPEGXL:
+gtest
+gflags
+gperftools
+graphviz        # Needs adjusted build options for -current
+highway
+zulu-openjdk8
+libjxl          # SlackBuild needs to remove a line or it fails and needs updated wkgtk
 # libavif and its deps are a dep for webkit2gtk-6.0 API:
 libyuv
 svt-av1
@@ -47,7 +55,8 @@ cups-pk-helper
 gnome-color-manager
 libgnomekbd
 webp-pixbuf-loader
-xdg-desktop-portal-gnome
+xdg-desktop-portal-gnome # Requires a new xdg-desktop-portal in -current
+tecla
 gnome-control-center
 
 # GNOME Shell and deps:
@@ -205,7 +214,7 @@ gnome-maps
 # GNOME Screenshot:
 #gnome-screenshot # Not in gnome-core, built into gnome-shell >= 42.0
 
-# GNOME Snapshot is the new cheese:
+# GNOME Snapshot is the new cheese: Requires new Pango in -current
 snapshot
 
 
