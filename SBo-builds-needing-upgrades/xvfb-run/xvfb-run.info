@@ -1,0 +1,10 @@
+PRGNAM="xvfb-run"
+VERSION="21.1.10"
+HOMEPAGE="https://packages.gentoo.org/packages/x11-misc/xvfb-run"
+DOWNLOAD="http://ftp.us.debian.org/debian/pool/main/x/xorg-server/xvfb_21.1.10-1_i386.deb"
+MD5SUM="81f77030d0408eb1cea534b171161649"
+MD5SUM_x86_64=""
+REQUIRES=""
+MAINTAINER="Bob Funk"
+EMAIL="bobfunk11@gmail.com"
+

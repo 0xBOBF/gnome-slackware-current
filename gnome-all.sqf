@@ -106,7 +106,7 @@ gnome-tweaks
 # Yelp:
 python3-webencodings
 html5lib
-python-toml
+python3-toml
 python2-setuptools-scm
 functools-lru-cache
 python2-soupsieve
