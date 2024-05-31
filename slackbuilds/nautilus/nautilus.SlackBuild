@@ -91,7 +91,6 @@ cd build
     -Dstrip=true \
     -Dpackagekit=false \
     -Dselinux=false \
-    -Dprofiling=false \
     -Dtests=none
   "${NINJA:=ninja}"
   DESTDIR=$PKG $NINJA install
