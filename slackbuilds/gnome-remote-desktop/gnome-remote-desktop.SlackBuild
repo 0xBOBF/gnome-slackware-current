@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=gnome-remote-desktop
-VERSION=${VERSION:-45.1}
+VERSION=${VERSION:-46.1}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -89,7 +89,9 @@ cd build
     --prefix=/usr \
     --sysconfdir=/etc \
     -Dstrip=true \
-    -Dsystemd=false
+    -Dsystemd=false \
+    -Drdp=false \
+    -Dvnc=true
   "${NINJA:=ninja}"
   DESTDIR=$PKG $NINJA install
 cd ..

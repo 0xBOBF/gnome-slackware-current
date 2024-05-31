@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=nautilus
-VERSION=${VERSION:-45.2.1}
+VERSION=${VERSION:-46.1}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -91,7 +91,6 @@ cd build
     -Dstrip=true \
     -Dpackagekit=false \
     -Dselinux=false \
-    -Dprofiling=false \
     -Dtests=none
   "${NINJA:=ninja}"
   DESTDIR=$PKG $NINJA install

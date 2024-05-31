@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=gnome-font-viewer
-VERSION=${VERSION:-45.0}
+VERSION=${VERSION:-46.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -75,6 +75,8 @@ find -L . \
   -o -perm 511 \) -exec chmod 755 {} \; -o \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
+
+patch -Np1 -i "$CWD/565d795731471c27542bb9ee60820a2d0d15534e.diff"
 
 mkdir build
 cd build

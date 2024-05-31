@@ -25,8 +25,8 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=gnome-session
-VERSION=${VERSION:-45.0}
-BUILD=${BUILD:-3}
+VERSION=${VERSION:-46.0}
+BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -77,10 +77,10 @@ find -L . \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
 # Patch gnome-session so it can be built with elogind:
-patch -Np1 -i $CWD/0001-meson-add-elogind-support.patch
+patch -Np1 -i $CWD/106.patch
 
 # Patch the gnome-session wrapper script to source profile scripts:
-patch -Np1 -i $CWD/0002-gnome-session-add-profile-sourcing.patch
+patch -Np1 -i $CWD/0001-gnome-session-source-lang.patch
 
 mkdir build
 cd build
@@ -96,9 +96,7 @@ cd build
     --sysconfdir=/etc \
     -Dstrip=true \
     -Ddocbook=false \
-    -Dsystemd=false \
-    -Delogind=true \
-    -Dsystemd_journal=false
+    -Dlogind_provider=elogind
   "${NINJA:=ninja}"
   DESTDIR=$PKG $NINJA install
 cd ..
