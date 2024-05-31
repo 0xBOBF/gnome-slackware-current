@@ -60,7 +60,19 @@ tecla
 gnome-control-center
 
 # GNOME Shell and deps:
-xvfb-run
+python3-flit_core
+python3-installer
+python3-pyproject-hooks
+python3-wheel
+python3-build
+python3-calver
+python3-trove-classifiers
+python3-pluggy
+python3-pathspec
+python3-editables
+python3-hatchling
+python3-hatch_vcs
+python3-hatch_fancy_pypi_readme
 python3-attrs
 libei
 mutter
@@ -73,7 +85,7 @@ gnome-session
 
 # GNOME Display Manager:
 libdaemon
-blocaled
+openrc-settingsd
 gdm
 
 # gnome-shell extensions:
@@ -111,22 +123,12 @@ python2-setuptools-scm
 functools-lru-cache
 python2-soupsieve
 python2-BeautifulSoup4
-python3-flit_core
-python3-installer
-python3-wheel
 python-zipp
 python-importlib_metadata
-python3-pyproject-hooks
-python3-build
-python3-calver
-python3-trove-classifiers
-python3-pluggy
-python3-pathspec
-python3-editables
-python3-hatchling
 python3-soupsieve
 BeautifulSoup4
-lxml
+python3-cssselect
+python3-lxml
 yelp-xsl
 yelp-tools
 yelp # SBO version from willy needs "--with-webkit2gtk-4-0" removed from the build options.
@@ -200,6 +202,9 @@ libpanel # Not on SBo yet.
 sysprof # Upgraded from SBo version.
 
 # GNOME Maps:
+abseil-cpp
+protobuf3
+protobuf-c
 libshumate
 gnome-maps
 
@@ -302,14 +307,15 @@ sushi
 # Epiphany:
 epiphany # Version 45.0 needs webkit2gtk6.0 to be >= 2.41.1, fallback to 44.7 to use 2.40.5
 
-# GNOME Boxes:
-yajl
-libvirt
-libvirt-glib
-spice-protocol
-spice
-spice-gtk
-gnome-boxes
+# GNOME Boxes: These need updates from ponce (libvirt*).
+# Skipping for now due to gcc-14 build failure.
+#yajl
+#libvirt
+#libvirt-glib
+#spice-protocol
+#spice
+#spice-gtk
+#gnome-boxes
 
 # GNOME Software: NOTE: Still built against libsoup2:
 # Skipping, due to package management side of this being
