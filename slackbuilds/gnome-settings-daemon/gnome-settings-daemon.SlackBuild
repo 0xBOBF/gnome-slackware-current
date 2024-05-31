@@ -76,7 +76,9 @@ find -L . -prune -name 'subprojects/gvc/.gitlab-ci' \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
-# Adding the gcr3 option to use gcr-3, unless slackware upgrades to gcr-4
+patch -Np1 -i "$CWD/46f998d7308cb18832666bc34ee54b1d9c27739f.patch"
+patch -Np1 -i "$CWD/360.patch"
+
 mkdir build
 cd build
   CFLAGS="$SLKCFLAGS" \
