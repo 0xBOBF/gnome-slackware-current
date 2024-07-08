@@ -1,0 +1,199 @@
+From b70ddf533f095bc6e105eba3b7216ac07c977e28 Mon Sep 17 00:00:00 2001
+From: Pascal Nowack <Pascal.Nowack@gmx.de>
+Date: Sat, 1 Jun 2024 15:15:58 +0200
+Subject: [PATCH] build: Fix build without RDP backend
+
+Building gnome-remote-desktop without the RDP backend currently fails
+due to running into an error that the polkit dependency could not be
+found.
+The respective pkgconfig is only looked up, when building
+gnome-remote-desktop with the RDP backend, as it is only needed there
+(for the gnome-remote-desktop-enable-service helper).
+
+To fix this issue, only build the gnome-remote-desktop-enable-service
+utility, when the RDP backend was enabled.
+Also, move the toggle_systemd_unit() function into the HAVE_RDP scope,
+as otherwise a compiler warning appears, that this function is unused,
+when the RDP backend is disabled.
+
+Closes: https://gitlab.gnome.org/GNOME/gnome-remote-desktop/-/issues/207
+---
+ src/grd-ctl.c   | 102 ++++++++++++++++++++++++------------------------
+ src/meson.build |  32 ++++++++-------
+ 2 files changed, 68 insertions(+), 66 deletions(-)
+
+diff --git a/src/grd-ctl.c b/src/grd-ctl.c
+index 5c138d77..19234519 100644
+--- a/src/grd-ctl.c
++++ b/src/grd-ctl.c
+@@ -103,57 +103,6 @@ process_options (GrdSettings       *settings,
+   return EX_USAGE;
+ }
+ 
+-static gboolean
+-toggle_systemd_unit (gboolean   enabled,
+-                     GError   **error)
+-{
+-
+-  g_autoptr (GStrvBuilder) builder = NULL;
+-  g_autofree char *error_output = NULL;
+-  g_auto (GStrv) new_argv = NULL;
+-  g_autofree char *pid = NULL;
+-  int wait_status;
+-  gboolean success;
+-
+-  builder = g_strv_builder_new ();
+-
+-  g_strv_builder_add (builder,
+-                      GRD_LIBEXEC_DIR "/gnome-remote-desktop-enable-service");
+-  pid = g_strdup_printf ("%d", getppid ());
+-  g_strv_builder_add (builder, pid);
+-  if (enabled)
+-    g_strv_builder_add (builder, "true");
+-  else
+-    g_strv_builder_add (builder, "false");
+-
+-  new_argv = g_strv_builder_end (builder);
+-
+-  success = g_spawn_sync (NULL,
+-                          new_argv,
+-                          NULL,
+-                          G_SPAWN_SEARCH_PATH |
+-                          G_SPAWN_CHILD_INHERITS_STDOUT,
+-                          NULL,
+-                          NULL,
+-                          NULL,
+-                          &error_output,
+-                          &wait_status,
+-                          error);
+-  if (!success)
+-    return FALSE;
+-
+-  if (!WIFEXITED (wait_status) || WEXITSTATUS (wait_status) != 0)
+-    {
+-      g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
+-                   "Could not %s system service:\n%s",
+-                   enabled? "enable" : "disable",
+-                   error_output);
+-      return FALSE;
+-    }
+-
+-  return success;
+-}
+-
+ static gboolean
+ systemd_unit_is_active (GBusType     bus_type,
+                         const char  *unit,
+@@ -246,6 +195,57 @@ rdp_set_port (GrdSettings  *settings,
+   return TRUE;
+ }
+ 
++static gboolean
++toggle_systemd_unit (gboolean   enabled,
++                     GError   **error)
++{
++
++  g_autoptr (GStrvBuilder) builder = NULL;
++  g_autofree char *error_output = NULL;
++  g_auto (GStrv) new_argv = NULL;
++  g_autofree char *pid = NULL;
++  int wait_status;
++  gboolean success;
++
++  builder = g_strv_builder_new ();
++
++  g_strv_builder_add (builder,
++                      GRD_LIBEXEC_DIR "/gnome-remote-desktop-enable-service");
++  pid = g_strdup_printf ("%d", getppid ());
++  g_strv_builder_add (builder, pid);
++  if (enabled)
++    g_strv_builder_add (builder, "true");
++  else
++    g_strv_builder_add (builder, "false");
++
++  new_argv = g_strv_builder_end (builder);
++
++  success = g_spawn_sync (NULL,
++                          new_argv,
++                          NULL,
++                          G_SPAWN_SEARCH_PATH |
++                          G_SPAWN_CHILD_INHERITS_STDOUT,
++                          NULL,
++                          NULL,
++                          NULL,
++                          &error_output,
++                          &wait_status,
++                          error);
++  if (!success)
++    return FALSE;
++
++  if (!WIFEXITED (wait_status) || WEXITSTATUS (wait_status) != 0)
++    {
++      g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
++                   "Could not %s system service:\n%s",
++                   enabled? "enable" : "disable",
++                   error_output);
++      return FALSE;
++    }
++
++  return success;
++}
++
+ static gboolean
+ rdp_enable (GrdSettings  *settings,
+             int           argc,
+diff --git a/src/meson.build b/src/meson.build
+index e4be7573..5f01b409 100644
+--- a/src/meson.build
++++ b/src/meson.build
+@@ -259,17 +259,17 @@ if have_rdp
+   ctl_deps += [
+     freerdp_dep,
+   ]
+-endif
+ 
+-enable_service_sources = ([
+-  'grd-enable-service.c',
+-])
++  enable_service_sources = ([
++    'grd-enable-service.c',
++  ])
+ 
+-enable_service_deps = [
+-  glib_dep,
+-  gio_dep,
+-  polkit_dep,
+-]
++  enable_service_deps = [
++    glib_dep,
++    gio_dep,
++    polkit_dep,
++  ]
++endif
+ 
+ executable('gnome-remote-desktop-daemon',
+            daemon_sources,
+@@ -290,12 +290,14 @@ executable('grdctl',
+            include_directories: [configinc],
+            install: true)
+ 
+-executable('gnome-remote-desktop-enable-service',
+-           enable_service_sources,
+-           dependencies: enable_service_deps,
+-           include_directories: [configinc],
+-           install: true,
+-           install_dir: libexecdir)
++if have_rdp
++  executable('gnome-remote-desktop-enable-service',
++             enable_service_sources,
++             dependencies: enable_service_deps,
++             include_directories: [configinc],
++             install: true,
++             install_dir: libexecdir)
++endif
+ 
+ generated_enums_schema = custom_target('gsettings-enums',
+               input: 'grd-enums.h',
+-- 
+GitLab
+

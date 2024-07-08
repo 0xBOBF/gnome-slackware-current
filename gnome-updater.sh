@@ -7,7 +7,7 @@
 
 
 GNOME_BRANCH="46"
-GNOME_VERSION="46.1"
+GNOME_VERSION="46.2"
 GNOME_SOURCE_URL="https://download.gnome.org/core/${GNOME_BRANCH}/${GNOME_VERSION}/sources/"
 
 LOCAL_DIR[0]="slackbuilds"
