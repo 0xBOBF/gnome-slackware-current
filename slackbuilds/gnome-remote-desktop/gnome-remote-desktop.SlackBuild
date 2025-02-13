@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=gnome-remote-desktop
-VERSION=${VERSION:-46.1}
+VERSION=${VERSION:-47.2}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -75,6 +75,9 @@ find -L . \
   -o -perm 511 \) -exec chmod 755 {} \; -o \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
+
+patch -Np1 -i $CWD/b70ddf533f095bc6e105eba3b7216ac07c977e28.patch || exit
+patch -Np1 -i $CWD/61195df50e2ced675262fbafe0b672f12b832b91.patch || exit
 
 mkdir build
 cd build
