@@ -26,8 +26,8 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=feedbackd
 PRGNAM2=gmobile
-VERSION=${VERSION:-v0.2.1}
-VERSION2=${VERSION2:-v0.0.4}
+VERSION=${VERSION:-v0.7.0}
+VERSION2=${VERSION2:-v0.2.1}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -73,6 +73,7 @@ tar xvf $CWD/$PRGNAM-$VERSION.tar.gz
 
 # Extract the gmobile subproject and move to its location:
 tar xvf $CWD/$PRGNAM2-$VERSION2.tar.gz
+mkdir -p $PRGNAM-$VERSION/subprojects/gmobile
 cp -a $PRGNAM2-$VERSION2/* $PRGNAM-$VERSION/subprojects/gmobile/
 
 cd $PRGNAM-$VERSION
@@ -95,6 +96,7 @@ cd build
     --mandir=/usr/man \
     --prefix=/usr \
     --sysconfdir=/etc \
+    -Dtests=false \
     -Dstrip=true
   "${NINJA:=ninja}"
   DESTDIR=$PKG $NINJA install

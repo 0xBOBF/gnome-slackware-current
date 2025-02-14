@@ -76,9 +76,6 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
-patch -Np1 -i $CWD/b70ddf533f095bc6e105eba3b7216ac07c977e28.patch || exit
-patch -Np1 -i $CWD/61195df50e2ced675262fbafe0b672f12b832b91.patch || exit
-
 mkdir build
 cd build
   CFLAGS="$SLKCFLAGS" \

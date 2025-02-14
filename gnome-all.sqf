@@ -185,8 +185,6 @@ libpanel # Not on SBo yet.
 sysprof # Upgraded from SBo version.
 
 # GNOME Maps:
-abseil-cpp
-protobuf3
 protobuf-c
 libshumate
 gnome-maps
@@ -217,6 +215,7 @@ folks
 gom
 sofia-sip
 libpeas
+libpeas2
 calls
 
 # Cantarell Font
@@ -258,6 +257,7 @@ libfdk-aac
 gnome-remote-desktop
 
 # GNOME Text Editor:
+libspelling
 gnome-text-editor
 
 # GNOME Tour:
